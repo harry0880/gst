@@ -66,7 +66,10 @@ public class IncGst extends Fragment {
                 et_final_sgct.setText("");
                 et_final_totalAmt.setText("");
                 et_final_igst.setText("");
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                gstswitch.setEnabled(true);
+                gstswitch.setChecked(false);
+                FinalBill.clear();
+                Snackbar.make(view, "All Data cleared", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -111,11 +114,14 @@ public class IncGst extends Fragment {
                         float amount = Float.parseFloat(temp[0]);
                         float igst = Float.parseFloat(temp[1]);
                         float totalAmount = Float.parseFloat(temp[2]);
+                        float  pretax = Float.parseFloat(equilizer(EtAmount.getText().toString(),igst+amount,amount));
 
-                        GstDatatype tempcalc = new GstDatatype(amount,igst);
+
+
+                        GstDatatype tempcalc = new GstDatatype(pretax,igst,totalAmount);
                         FinalBill= FinalBill.add(tempcalc,true);
 
-                        gstList.add(new GST(gstList.size(), percentage + "%", amount, igst, totalAmount));
+                        gstList.add(new GST(gstList.size(), percentage + "%", pretax, igst, totalAmount));
 
                        // adapter.notifyItemInserted(gstList.size() - 1);
                         adapter.notifyDataSetChanged();
@@ -134,15 +140,19 @@ public class IncGst extends Fragment {
                     String[] temp = output.split("#");
 
                     if (!(temp[0].equals("Wrong Values"))) {
+
+
                         float amount = Float.parseFloat(temp[0]);
                         float sgst = Float.parseFloat(temp[1]);
                         float Cgst = Float.parseFloat(temp[2]);
                         float totalAmount = Float.parseFloat(temp[3]);
+                        float  pretax = Float.parseFloat(equilizer(EtAmount.getText().toString(),sgst + Cgst+amount,amount));
 
-                        GstDatatype tempcalc = new GstDatatype(amount,sgst,sgst);
+
+                        GstDatatype tempcalc = new GstDatatype(pretax,sgst,Cgst,totalAmount);
                         FinalBill= FinalBill.add(tempcalc,false);
 
-                        gstList.add(new GST(gstList.size(), percentage + "%", amount, sgst, Cgst, totalAmount));
+                        gstList.add(new GST(gstList.size(), percentage + "%", pretax, sgst, Cgst, totalAmount));
                         adapter.notifyDataSetChanged();
                        // adapter.notifyItemInserted(gstList.size() - 1);
                         gstswitch.setEnabled(false);
@@ -156,18 +166,41 @@ public class IncGst extends Fragment {
                     et_final_Amount.setText(FinalBill.amt + "");
                     et_final_cgst.setText(FinalBill.t1 + "");
                     et_final_sgct.setText(FinalBill.t2 + "");
-                    //  et_final_totalAmt.setText(FinalBill.);
+                     et_final_totalAmt.setText(FinalBill.total+"");
                 }
                 else {
                     et_final_Amount.setText(FinalBill.amt + "");
                     et_final_igst.setText(FinalBill.t1 + "");
+                    et_final_totalAmt.setText(FinalBill.total+"");
                 }
             }
         });
 
         return view;
     }
+ private String equilizer(String originalamount_string,float calculatedamount,float prtaxamt) {
 
+     float originalamount = Float.parseFloat(originalamount_string);
+
+     if (originalamount < calculatedamount) {
+         float temp = 0;
+         temp = calculatedamount - originalamount;
+         prtaxamt = prtaxamt - temp;
+         return String.format("%.2f", prtaxamt);
+     }
+    else if (originalamount > calculatedamount) {
+         float temp = 0;
+         temp = originalamount - calculatedamount;
+         prtaxamt = prtaxamt + temp;
+         return String.format("%.2f", prtaxamt);
+     }
+      else
+     {
+         return String.format("%.2f", prtaxamt);
+     }
+
+
+ }
 
     private class GSTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -207,10 +240,10 @@ public class IncGst extends Fragment {
                                 case R.id.editOption:
                                     EtAmount.setText(String.valueOf(gst.getTotalAmount()));
                                     if (gstswitch.isChecked()) {
-                                        GstDatatype temp=new GstDatatype(gst.getAmount(),gst.t1(),gst.t2());
+                                        GstDatatype temp=new GstDatatype(gst.getAmount(),gst.t1(),gst.t2(),gst.getTotalAmount());
                                         FinalBill= FinalBill.sub(temp,true);
                                     } else {
-                                        GstDatatype temp=new GstDatatype(gst.getAmount(),gst.t1());
+                                        GstDatatype temp=new GstDatatype(gst.getAmount(),gst.t1(),gst.getTotalAmount());
                                         FinalBill= FinalBill.sub(temp,true);
                                     }
                                     gstList.remove(position);
@@ -220,21 +253,22 @@ public class IncGst extends Fragment {
                                 case R.id.removeOption:
 
                                     if (gstswitch.isChecked()) {
-                                        GstDatatype temp=new GstDatatype(gst.getAmount(),gst.t1(),gst.t2());
+                                        GstDatatype temp=new GstDatatype(gst.getAmount(),gst.t1(),gst.t2(),gst.getTotalAmount());
                                         FinalBill= FinalBill.sub(temp,true);
                                         if(!gstswitch.isChecked()) {
                                             et_final_Amount.setText(FinalBill.amt + "");
                                             et_final_cgst.setText(FinalBill.t1 + "");
                                             et_final_sgct.setText(FinalBill.t2 + "");
-                                            //  et_final_totalAmt.setText(FinalBill.);
+                                            et_final_totalAmt.setText(FinalBill.total+"");
                                         }
                                         else {
                                             et_final_Amount.setText(FinalBill.amt + "");
                                             et_final_igst.setText(FinalBill.t1 + "");
+                                            et_final_totalAmt.setText(FinalBill.total+"");
                                         }
 
                                     } else {
-                                        GstDatatype temp=new GstDatatype(gst.getAmount(),gst.t1());
+                                        GstDatatype temp=new GstDatatype(gst.getAmount(),gst.t1(),gst.getTotalAmount());
                                         FinalBill= FinalBill.sub(temp,true);
                                     }
                                     gstList.remove(position);

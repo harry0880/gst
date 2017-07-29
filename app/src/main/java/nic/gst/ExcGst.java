@@ -81,7 +81,7 @@ public class ExcGst extends Fragment{
                         float igst = Float.parseFloat(temp[1]);
                         float totalAmount = Float.parseFloat(temp[2]);
 
-                        GstDatatype tempcalc = new GstDatatype(amount,igst);
+                        GstDatatype tempcalc = new GstDatatype(amount,igst,totalAmount);
                         FinalBill= FinalBill.add(tempcalc,true);
 
                         gstList.add(new GST(gstList.size(), percentage + "%", amount, igst, totalAmount));
@@ -107,7 +107,7 @@ public class ExcGst extends Fragment{
                         float Cgst = Float.parseFloat(temp[2]);
                         float totalAmount = Float.parseFloat(temp[3]);
 
-                        GstDatatype tempcalc = new GstDatatype(amount,sgst,sgst);
+                        GstDatatype tempcalc = new GstDatatype(amount,sgst,sgst,totalAmount);
                         FinalBill= FinalBill.add(tempcalc,false);
 
                         gstList.add(new GST(gstList.size(), percentage + "%", amount, sgst, Cgst, totalAmount));
