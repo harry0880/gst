@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/viewOptionMenu"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+           android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:backgroundTint="?android:attr/colorBackground"
+            app:srcCompat="@drawable/ic_action_3dots" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount" />
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView"
+            android:text="GST Group" />
+
+
+
+        <TextView
+            android:id="@+id/textViewSgst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:text="SGST"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/textViewCGST"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewSgst"
+            android:text="CGST"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/textViewIGST"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewCGST"
+            android:text="IGST"
+            android:visibility="visible"/>
+
+
+
+
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewIGST"
+            android:text="Total" />
+
+        <TextView
+            android:id="@+id/tvGstPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvAmount"
+            android:layout_alignStart="@+id/tvAmount"
+            android:layout_below="@+id/tvAmount"
+            android:text="TextView" />
+
+
+
+
+
+        <TextView
+            android:id="@+id/tvsgct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvAmount"
+            android:layout_alignLeft="@+id/tvAmount"
+            android:layout_below="@+id/tvGstPercent"
+            android:text=""
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/tvcgst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvAmount"
+            android:layout_alignLeft="@+id/tvAmount"
+            android:layout_below="@+id/tvsgct"
+            android:text=""
+            android:visibility="visible"
+            />
+       <TextView
+            android:id="@+id/tvigst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvAmount"
+            android:layout_alignLeft="@+id/tvAmount"
+            android:layout_below="@+id/tvcgst"
+            android:visibility="visible"
+            android:text="" />
+
+
+
+
+        <TextView
+            android:id="@+id/tvTotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvAmount"
+            android:layout_alignStart="@+id/tvAmount"
+            android:layout_below="@+id/tvigst"
+            android:text="TextView" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
