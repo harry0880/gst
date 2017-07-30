@@ -1,5 +1,6 @@
 package nic.gst;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -124,8 +126,11 @@ public class IncGst extends Fragment {
                         gstList.add(new GST(gstList.size(), percentage + "%", pretax, igst, totalAmount));
 
                        // adapter.notifyItemInserted(gstList.size() - 1);
+
+
                         adapter.notifyDataSetChanged();
                         gstswitch.setEnabled(false);
+
                     } else {
                         Toast.makeText(getActivity(), "Wrong Values!", Toast.LENGTH_SHORT).show();
 
